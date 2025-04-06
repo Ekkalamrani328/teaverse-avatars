@@ -1,0 +1,23 @@
+{
+  "name": "TeaVerse Avatar #56",
+  "description": "Your identity as a Web3 builder in the Tea ecosystem.",
+  "image": "https://drizer.github.io/teaverse-avatars/images/avatar56.png",
+  "attributes": [
+    {
+      "trait_type": "Role",
+      "value": "Developer"
+    },
+    {
+      "trait_type": "Tea Level",
+      "value": 5
+    },
+    {
+      "trait_type": "Origin",
+      "value": "Testnet"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    }
+  ]
+}

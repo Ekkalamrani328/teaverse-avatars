@@ -1,0 +1,23 @@
+{
+  "name": "TeaVerse Avatar #93",
+  "description": "Your identity as a Web3 builder in the Tea ecosystem.",
+  "image": "https://drizer.github.io/teaverse-avatars/images/avatar93.png",
+  "attributes": [
+    {
+      "trait_type": "Role",
+      "value": "Validator"
+    },
+    {
+      "trait_type": "Tea Level",
+      "value": 2
+    },
+    {
+      "trait_type": "Origin",
+      "value": "Testnet"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    }
+  ]
+}
