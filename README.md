@@ -1,1 +1,0 @@
-# teaverse-avatars
