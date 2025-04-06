@@ -76,6 +76,7 @@
       margin-top: 2rem;
       border: none;
       transition: background-color 0.3s;
+      display: none;
     }
     #mintButton:hover {
       background-color: #00b6a3;
@@ -103,6 +104,7 @@
     const gallery = document.getElementById('gallery');
     const avatarGrid = document.getElementById('avatarGrid');
     const mintButton = document.getElementById('mintButton');
+    let selectedAvatarId = null;
 
     let provider;
     let signer;
@@ -140,8 +142,13 @@
         if (!signer) {
           await connectWallet();
         }
-        
-        const tokenURI = "https://ekkalamrani328.github.io/teaverse-avatars/metadata/1.json";  // URL metadata
+
+        if (!selectedAvatarId) {
+          alert("Pilih avatar terlebih dahulu.");
+          return;
+        }
+
+        const tokenURI = `https://ekkalamrani328.github.io/teaverse-avatars/metadata/${selectedAvatarId}.json`;  // URL metadata
         const to = await signer.getAddress(); // Mengambil alamat wallet pengguna
 
         // Panggil fungsi mint di kontrak
@@ -173,7 +180,7 @@
           const card = document.createElement('div');
           card.className = 'avatar-card';
           card.innerHTML = `
-            <img src="https://ekkalamrani328.github.io/teaverse-avatars/images/${i}.png" alt="Avatar ${i}" />
+            <img src="https://ekkalamrani328.github.io/teaverse-avatars/images/${i}.png" alt="Avatar ${i}" onclick="selectAvatar(${i})"/>
             <div class="avatar-info">
               <strong>${data.name}</strong><br/>
               ${data.description}
@@ -184,6 +191,13 @@
           console.warn(`❌ Metadata for Avatar ${i} not found.`);
         }
       }
+    }
+
+    // Fungsi untuk memilih avatar
+    function selectAvatar(id) {
+      selectedAvatarId = id;
+      mintButton.style.display = "block"; // Tampilkan tombol minting
+      previewImage.src = `https://ekkalamrani328.github.io/teaverse-avatars/images/${id}.png`; // Ganti gambar preview
     }
   </script>
 </body>
