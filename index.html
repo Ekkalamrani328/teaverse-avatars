@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,8 +72,7 @@
   <h1>TeaVerse Avatars</h1>
   <p>A digital avatar NFT collection representing open-source contributors in the Tea Protocol.</p>
   
-  <!-- ✅ Gambar preview dari folder images -->
-  <img class="preview" src="images/avatar1.png" alt="TeaVerse Avatar Preview" id="previewImage"/>
+  <img class="preview" src="images/1.png" alt="TeaVerse Avatar Preview" id="previewImage"/>
 
   <div class="gallery" id="gallery">
     <h2 style="margin-top: 2rem; color: #00ffe1;">🎨 Avatar Gallery</h2>
@@ -100,7 +100,7 @@
           const card = document.createElement('div');
           card.className = 'avatar-card';
           card.innerHTML = `
-            <img src="images/avatar${i}.png" alt="Avatar ${i}" />
+            <img src="images/${i}.png" alt="Avatar ${i}" />
             <div class="avatar-info">
               <strong>${data.name}</strong><br/>
               ${data.description}
