@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TeaVerse Avatars</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -13,46 +13,104 @@
       padding: 0;
       background-color: #0c0c0c;
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      text-align: center;
     }
     h1 {
       font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      margin-top: 2rem;
       color: #00ffe1;
     }
     p {
       max-width: 600px;
-      text-align: center;
-      margin-bottom: 2rem;
+      margin: 0 auto 2rem;
+      padding: 0 1rem;
     }
-    img {
+    .preview {
       max-width: 300px;
       border-radius: 1rem;
+      cursor: pointer;
       box-shadow: 0 0 20px rgba(0, 255, 225, 0.4);
+      transition: transform 0.3s ease;
     }
-    .cta {
-      margin-top: 2rem;
-      background-color: #00ffe1;
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      color: #000;
-      font-weight: 700;
-      text-decoration: none;
-      transition: 0.3s ease;
+    .preview:hover {
+      transform: scale(1.05);
     }
-    .cta:hover {
-      background-color: #00ccb8;
+    .gallery {
+      display: none;
+      padding: 2rem;
+    }
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .avatar-card {
+      background: #1a1a25;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 255, 204, 0.1);
+      transition: 0.2s ease;
+    }
+    .avatar-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 255, 204, 0.3);
+    }
+    .avatar-card img {
+      width: 100%;
+      display: block;
+    }
+    .avatar-info {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
   <h1>TeaVerse Avatars</h1>
-  <p>A digital avatar NFT collection representing open-source contributors in the Tea Protocol. Connect your developer identity to the metaverse — reputation meets art.</p>
-  <img src="https://files.chatgpt.com/file_00000000411861f6ae32b572c2292c22/A_digital_illustration_titled_%22TeaVerse_Avatars%22_f.png" alt="TeaVerse Avatar Preview">
-  <a class="cta" href="https://github.com/Drizer/teaverse-avatars" target="_blank">View Project on GitHub</a>
+  <p>A digital avatar NFT collection representing open-source contributors in the Tea Protocol.</p>
+  
+  <img class="preview" src="https://files.chatgpt.com/file_00000000411861f6ae32b572c2292c22/A_digital_illustration_titled_%22TeaVerse_Avatars%22_f.png" alt="TeaVerse Avatar Preview" id="previewImage"/>
+
+  <div class="gallery" id="gallery">
+    <h2 style="margin-top: 2rem; color: #00ffe1;">🎨 Avatar Gallery</h2>
+    <div class="avatar-grid" id="avatarGrid"></div>
+  </div>
+
+  <script>
+    const previewImage = document.getElementById('previewImage');
+    const gallery = document.getElementById('gallery');
+    const avatarGrid = document.getElementById('avatarGrid');
+
+    previewImage.addEventListener('click', () => {
+      gallery.style.display = 'block';
+      loadAvatars();
+      previewImage.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    async function loadAvatars() {
+      for (let i = 1; i <= 100; i++) {
+        try {
+          const res = await fetch(`metadata/${i}.json`);
+          const data = await res.json();
+
+          const card = document.createElement('div');
+          card.className = 'avatar-card';
+          card.innerHTML = `
+            <img src="images/${i}.png" alt="Avatar ${i}" />
+            <div class="avatar-info">
+              <strong>${data.name}</strong><br/>
+              ${data.description}
+            </div>
+          `;
+          avatarGrid.appendChild(card);
+        } catch (e) {
+          console.warn(`❌ Metadata for Avatar ${i} not found.`);
+        }
+      }
+    }
+  </script>
 </body>
 </html>
