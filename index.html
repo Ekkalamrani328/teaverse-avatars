@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +65,21 @@
       font-size: 0.9rem;
       color: #ccc;
     }
+    /* Tombol Minting */
+    #mintButton {
+      background-color: #00ffe1;
+      color: #0c0c0c;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 2rem;
+      border: none;
+      transition: background-color 0.3s;
+    }
+    #mintButton:hover {
+      background-color: #00b6a3;
+    }
   </style>
 </head>
 <body>
@@ -80,17 +94,75 @@
     <div class="avatar-grid" id="avatarGrid"></div>
   </div>
 
+  <!-- Tombol Mint NFT -->
+  <button id="mintButton" onclick="mintNFT()">Mint NFT</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script>
     const previewImage = document.getElementById('previewImage');
     const gallery = document.getElementById('gallery');
     const avatarGrid = document.getElementById('avatarGrid');
+    const mintButton = document.getElementById('mintButton');
 
+    let provider;
+    let signer;
+    let contract;
+    const contractAddress = "0xYourContractAddress";  // Ganti dengan alamat kontrak yang telah di-deploy
+    const abi = [
+      {
+        "inputs": [
+          { "internalType": "address", "name": "to", "type": "address" },
+          { "internalType": "string", "name": "tokenURI", "type": "string" }
+        ],
+        "name": "mint",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ];
+
+    // Fungsi untuk menghubungkan wallet MetaMask
+    async function connectWallet() {
+      if (window.ethereum) {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        signer = provider.getSigner();
+        contract = new ethers.Contract(contractAddress, abi, signer);
+      } else {
+        alert("MetaMask tidak terdeteksi. Silakan install MetaMask.");
+      }
+    }
+
+    // Fungsi untuk mint NFT
+    async function mintNFT() {
+      try {
+        // Pastikan wallet sudah terhubung
+        if (!signer) {
+          await connectWallet();
+        }
+        
+        const tokenURI = "https://ekkalamrani328.github.io/teaverse-avatars/metadata/1.json";  // URL metadata
+        const to = await signer.getAddress(); // Mengambil alamat wallet pengguna
+
+        // Panggil fungsi mint di kontrak
+        const tx = await contract.mint(to, tokenURI);
+        await tx.wait();  // Tunggu sampai transaksi selesai
+
+        alert("NFT berhasil di-mint!");
+      } catch (err) {
+        console.error(err);
+        alert("Terjadi kesalahan saat minting.");
+      }
+    }
+
+    // Menampilkan gallery avatar saat gambar preview diklik
     previewImage.addEventListener('click', () => {
       gallery.style.display = 'block';
       loadAvatars();
       previewImage.scrollIntoView({ behavior: 'smooth' });
     });
 
+    // Memuat avatar dari metadata
     async function loadAvatars() {
       for (let i = 1; i <= 100; i++) {
         try {
