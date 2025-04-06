@@ -72,7 +72,8 @@
   <h1>TeaVerse Avatars</h1>
   <p>A digital avatar NFT collection representing open-source contributors in the Tea Protocol.</p>
   
-  <img class="preview" src="images/1.png" alt="TeaVerse Avatar Preview" id="previewImage"/>
+  <!-- ✅ Gambar preview dari folder images -->
+  <img class="preview" src="https://ekkalamrani328.github.io/teaverse-avatars/images/1.png" alt="TeaVerse Avatar Preview" id="previewImage"/>
 
   <div class="gallery" id="gallery">
     <h2 style="margin-top: 2rem; color: #00ffe1;">🎨 Avatar Gallery</h2>
@@ -93,14 +94,14 @@
     async function loadAvatars() {
       for (let i = 1; i <= 100; i++) {
         try {
-          const res = await fetch(`metadata/${i}.json`);
+          const res = await fetch(`https://ekkalamrani328.github.io/teaverse-avatars/metadata/${i}.json`);
           if (!res.ok) continue;
           const data = await res.json();
 
           const card = document.createElement('div');
           card.className = 'avatar-card';
           card.innerHTML = `
-            <img src="images/${i}.png" alt="Avatar ${i}" />
+            <img src="https://ekkalamrani328.github.io/teaverse-avatars/images/${i}.png" alt="Avatar ${i}" />
             <div class="avatar-info">
               <strong>${data.name}</strong><br/>
               ${data.description}
